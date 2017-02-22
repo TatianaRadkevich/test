@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html>
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link type="text/css" rel="stylesheet" href="theme.css">
+    <script type="text/javascript" src="jquery.js"></script>
+    <link type="text/css" rel="stylesheet" href="default.css">
+    <script src="params.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <title>
+        Поиск данных в реестре должников
+    </title>
+</head>
+
+<body>
+<form id="dialogForm" name="dialogForm" method="post" action="" enctype="application/x-www-form-urlencoded">
+    <input type="hidden" name="dialogForm" value="dialogForm">
+    <div id="dialogForm:dialogDefaultCommandPanel" class="ui-panel ui-widget ui-widget-content ui-corner-all ui-helper-hidden" data-widget="widget_dialogForm_dialogDefaultCommandPanel">
+        <div id="dialogForm:dialogDefaultCommandPanel_content" class="ui-panel-content ui-widget-content">
+        </div>
+    </div>
+    <input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:0" value="" autocomplete="off">
+</form>
+<form id="mainForm" name="mainForm" method="post" action="" enctype="application/x-www-form-urlencoded">
+    <input type="hidden" name="mainForm" value="mainForm">
+    <div id="mainForm:ajaxStatusPanel" style="display:block; position:absolute; top:11px; left:500px; width:auto;                               height:auto; z-index: 99999;">
+        <div id="mainForm:ajaxStatusPanel_start" style="display:none">
+            <!--<img src="ajaxloading.gif">-->
+        </div>
+        <div id="mainForm:ajaxStatusPanel_complete" style="display:none">
+        </div>
+    </div>
+    <!-- ПОЖАЛУЙСТА ПОДОЖДИТЕ  >
+    <!--<div id="mainForm:j_idt16" class="ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow ui-hidden-container" style="width: auto; height: auto;" role="dialog" aria-labelledby="mainForm:j_idt16_title" aria-hidden="true"><div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top">
+        <span id="mainForm:j_idt16_title" class="ui-dialog-title">Пожалуйста подождите...</span>
+    </div>
+        <div class="ui-dialog-content ui-widget-content" style="height: auto;">
+            <table>
+                <tbody>
+                <tr>
+                    <td><img id="mainForm:j_idt18" src="hourglass.png" alt=""></td>
+                    <td><img id="mainForm:j_idt19" src="ajaxloadingbar.gif" alt=""></td>
+                </tr>
+                <tr>
+                    <td>
+                        <br>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>-->
+    <div id="mainForm:mainMenu" class="ui-toolbar ui-widget ui-widget-header ui-corner-all ui-helper-clearfix mainMenu">
+        <div class="ui-toolbar-group-left"></div>
+        <div class="ui-toolbar-group-right"></div>
+    </div>
+    <div id="mainForm:formContent" class="ui-panel ui-widget ui-widget-content ui-corner-all ui-margin-top" data-widget="widget_mainForm_formContent">
+        <div id="mainForm:formContent_content" class="ui-panel-content ui-widget-content">
+            <span id="mainForm:growl"></span>
+            <div id="mainForm:j_idt24" class="ui-panel ui-widget ui-widget-content ui-corner-all" data-widget="widget_mainForm_j_idt24">
+                <div id="mainForm:j_idt24_header" class="ui-panel-titlebar ui-widget-header ui-helper-clearfix ui-corner-all">
+                    <span class="ui-panel-title" style="font-size: initial;">Форма поиска</span>
+                </div>
+
+                <div id="mainForm:j_idt24_content" class="ui-panel-content ui-widget-content">
+                    <div style="    font-size: initial;">
+                    <p>На данной странице вы можете осуществить поиск информации о субъекте в реестре должников по исполнительным производствам. <label style="color:rgba(239, 65, 65, 0.78)">Информация носит справочный характер.</label></p>
+                        <p>За уточнением информации необходимо <a href="http://minjust.gov.by/ru/departments/filter/kind/enforcement/" style="color:cornflowerblue">обращаться в органы принудительного исполнения</a>.</p>
+						<p>При возникновении технических затруднений в работе с данным Реестром Вы можете отправить сообщение на электронный адрес  технической поддержки 
+<a href="mailto:support@minjust.by" style="color:cornflowerblue">support@minjust.by</a> </p>
+                        </div>
+                    <div class="panel-group" style="margin: 0" id="accordion">
+                    <div class="ui-accordion panel panel-default" role="tablist">
+                        <label data-toggle="collapse" data-parent="#accordion" href="#collapse1" style="width: 100%; cursor: pointer; margin: 0" onclick="controllerTab(true)" id="fiz">
+                        <div class="panel-heading" style="padding: 0">
+                            <h3 id="fiz-h" class="ui-accordion-header ui-helper-reset ui-state-default ui-state-active ui-corner-top" role="tab" aria-expanded="true" aria-selected="true" tabindex="0" style="font-size: 140%;">
+                                <span id="fiz-sp" class="glyphicon glyphicon-triangle-bottom"></span>Поиск физического лица
+                            </h3>
+                        </div>
+                            </label>
+
+                        <!--ПОИСК ПО ФИЗИКАМ-->
+                        <div id="collapse1" class="panel-collapse collapse in">
+                            <div class="panel-body">
+                        <div class="ui-accordion-content ui-helper-reset  panel panel-default" role="tabpanel" aria-hidden="false">
+                            <div style="    font-size: initial; padding-bottom: 2%">
+                                <p>Реестр содержит информацию о следующих должниках:</p>
+                                <p>1. в отношении которых  исполнительное производство возбуждено и находится на исполнении более 3 месяцев (производство не окончено);</p>
+                                <p>2. в отношении которых исполнительное производство окончено в связи с невозможностью взыскания долга (полностью или частично) не более 3 лет назад.</p>
+                                <p>По результатам поиска выдается справочная информация о количестве находящихся на исполнении исполнительных производств (по п.1), о количестве оконченных исполнительных производств (по п.2), об органе принудительного исполнения.</p>
+                            </div>
+                            <table style="width: 50%; font-size: small;">
+                                <tbody>
+                                <tr style="margin-bottom: 1%">
+                                    <td>Параметры поиска</td>
+                                    </tr>
+                                <tr style="margin-bottom: 1%">
+                                    <td>Фамилия</td><td><input maxlength="30" placeholder="ИВАНОВ" id="f-fam" name="mainForm:j_idt25:j_idt35" type="text"  class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all uppercase" role="textbox" aria-disabled="false" aria-readonly="false"></td>
+                                </tr>
+                                <tr style="margin-bottom: 1%">
+                                    <td>Имя</td><td><input maxlength="30" id="f-name" placeholder="ИВАН" name="mainForm:j_idt25:j_idt35" type="text"  class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all uppercase" role="textbox" aria-disabled="false" aria-readonly="false"></td>
+                                </tr>
+                                <tr>
+                                    <td>Отчество</td><td><input maxlength="30" placeholder="ИВАНОВИЧ" id="f-otch" name="mainForm:j_idt25:j_idt35" type="text"  class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all uppercase" role="textbox" aria-disabled="false" aria-readonly="false"></td>
+                                </tr>
+                                <tr>
+                                   <td style="width: 30%">Идентификационный номер</td>
+                                    <td><input id="f-num" maxlength="14" placeholder="111QW123123WW" name="mainForm:j_idt25:j_idt35" type="text"  class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all uppercase" role="textbox" aria-disabled="false" aria-readonly="false"></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <button style="    margin-top: 1%; font-size: 200%;height: 40px;" id="btn-f" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left" type="button">
+                                <span class="glyphicon glyphicon-search" style="margin-right: 15px;">&nbspПоиск</span>
+                            </button>
+                            <p>Все поля  обязательны для заполнения</p>
+                                </div>
+                                </div>
+                        </div>
+                        </div>
+
+                       <!--ПОИСК ПО ЮРИКАМ-->
+                        <div class="panel panel-default">
+                            <label data-toggle="collapse" onclick="controllerTab(false)" data-parent="#accordion" href="#collapse2" style="width: 100%; margin: 0; cursor: pointer" id="jur">
+                            <div class="panel-heading" style="padding: 0">
+                        <h3 id="jur-h" class="ui-accordion-header ui-helper-reset ui-state-default ui-corner-all" role="tab" aria-expanded="false" aria-selected="false" tabindex="-1" style="font-size: 140%;    padding: 8px; padding-left: 35px;">
+                            <span class="glyphicon glyphicon-triangle-right" id="jur-sp"> </span></span> Поиск юридического лица, индивидуального предпринимателя</h3>
+                                </div>
+                                </label>
+                            <div id="collapse2" class="panel-collapse collapse">
+                                <div class="panel-body">
+                                    <div style="    font-size: initial; padding-bottom: 2%">
+                                        <p>Реестр содержит информацию о следующих должниках:</p>
+                                       <p>1. в отношении которых  исполнительное производство возбуждено и находится на исполнении более 3 месяцев (производство не окончено);</p>
+                                        <p>2. в отношении которых исполнительное производство окончено не более трёх лет назад в связи с:</p>
+										<p>2.1 невозможностью взыскания долга (полностью или частично);</p>
+										<p>2.2 открытием в отношении должника конкурсного производства;</p>
+										<p>2.3 принятием решения о ликвидации (прекращении деятельности) должника.</p>
+                                        <p>По результатам поиска выдается справочная информация о количестве находящихся на исполнении исполнительных производств (по п.1), о количестве оконченных исполнительных производств (по п.2), об органе принудительного исполнения.</p>
+                                    </div>
+                            <table style="font-size: small; width: 40%">
+                                <tbody>
+                                <tr>
+                                    <td colspan="2"> Введите
+                                        УНП/регистрационный номер</td></tr>
+                                    <tr>
+                                    <td><input placeholder="111111111" maxlength="9" onkeyup="return proverka(this);" onchange="return proverka(this);" pattern="\d" id="j-unp" type="text" size="0"  class="ui-inputfield ui-inputtext ui-widget ui-state-default ui-corner-all uppercase" role="textbox" aria-disabled="false" aria-readonly="false"></td>
+                                        <td>Уточнить УНП/рег.номер  и наименование юр.лица можно <a href="http://egr.gov.by/egrn/index.jsp?content=Find" style="color:cornflowerblue">ЗДЕСЬ</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <button type="button" style="    margin-top: 1%; font-size: 200%;height: 40px;" id="btn-j" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-left" >
+
+                                <span class="glyphicon glyphicon-search" style="margin-right: 15px;">&nbspПоиск</span>
+                            </button>
+
+                        <input type="hidden" id="mainForm:j_idt25_active" name="mainForm:j_idt25_active" value="0" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                    <!--РРЕЗУЛЬТАТЫ -->
+                    <div id="mainForm:resultPanel" class="ui-outputpanel ui-widget">
+                        <div id="mainForm:resultTable" class="ui-datatable ui-widget">
+                        <div class="ui-datatable-header ui-widget-header ui-corner-top" style="    font-size: initial;">
+                        Результаты поиска
+                    </div>
+                        <div class="ui-datatable-tablewrapper">
+                            <table role="grid" id="table_jur" class="dis">
+                                <thead id="resultTable_head_j">
+                                <tr role="row">
+                                    <th  class="ui-state-default" role="columnheader" style="width:30%">
+                                        <span class="ui-column-title" style="    font-size: 150%;">УНП</span>
+                                    </th>
+                                    <th  class="ui-state-default" role="columnheader" style="width:30%">
+                                    <span class="ui-column-title" style="    font-size: 150%;">Наименование</span>
+                                </th>
+
+                                    <th class="ui-state-default" role="columnheader" >
+                                        <span class="ui-column-title" style="    font-size: 150%;">Орган принудительного исполнения</span>
+                                    </th>
+                                    <th  class="ui-state-default" role="columnheader" >
+                                        <span class="ui-column-title" style="    font-size: 150%;">Количество производств</span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="resultTable_data_j" class="ui-datatable-data ui-widget-content" style="font-size:120%">
+
+                                </tbody>
+                            </table>
+
+                            <table role="grid" id="table_fiz" class="dis">
+                                <thead id="resultTable_head_f">
+                                <tr role="row">
+                                    <th  class="ui-state-default" role="columnheader">
+                                        <span class="ui-column-title" style="    font-size: 150%;">Идентификационный номер</span>
+                                    </th>
+                                    <th  class="ui-state-default" role="columnheader" style="width:30%">
+                                        <span class="ui-column-title" style="    font-size: 150%;">ФИО</span>
+                                    </th>
+                                    <th  class="ui-state-default" role="columnheader" >
+                                        <span class="ui-column-title" style="    font-size: 150%;">Орган принудительного исполнения</span>
+                                    </th>
+                                    <th  class="ui-state-default" role="columnheader" >
+                                        <span class="ui-column-title" style="    font-size: 150%;">Количество производств</span>
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody id="resultTable_data_f" class="ui-datatable-data ui-widget-content" style="font-size:120%">
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" name="javax.faces.ViewState" id="j_id1:javax.faces.ViewState:1" value="-354462091667208619:1476272670389503891" autocomplete="off">
+</form>
+
+<div id="textarea_simulator" style="position: absolute; top: 0px; left: 0px; visibility: hidden;">
+</div>
+<div class="ui-dialog-docking-zone"></div>
+<div id="mainForm:growl_container" class="ui-growl ui-widget" style="z-index: 1001;"></div>
+
+
+<style>
+    .dis{
+        display: none;
+    }
+</style>
+
+<script>
+    $(document).ready(function () {
+
+
+        $("#btn-j").click(function () {
+            if($("#j-unp").val().length != 0) {
+                var text = $("#j-unp").val(),
+                        tr = "<tr class='ui-widget-content ui-datatable-empty-message'>",
+                        table, code;
+                var obj = {
+                    unp: text
+                }
+                $("#resultTable_data_j").empty();
+
+                $.ajax({
+                    type: "POST",
+                    data: JSON.stringify(obj),
+                    url: "http://" + ip + ":" + port + "/root/SHSGetFromData",
+                    async: false,
+                    contentType: 'application/json',
+                    success: function (res) {
+                        code = res.code;
+                        table = (res.result);
+                    },
+                    error: function (res) {
+                        alert(res);
+                    }
+                });
+                $("#resultTable_data_j").append(function () {
+                    if (code == 1) {
+                        for (var i = 0; i < table.length; i++) {
+                            tr += '<td>' + table[i].num + '</td>' +
+                                    '<td>' + table[i].name + '</td>' +
+                                    '<td>' + table[i].opi + '</td>' +
+                                    '<td>' + table[i].cnt + '</td>' +
+                                    '</tr>';
+                        }
+                        return tr;
+                    } else {
+                        tr += '<td colspan="3">' + table + '</td>' + '</tr>';
+                        return tr;
+                    }
+                })
+                isDisabled("table_fiz", "table_jur");
+            }else{
+                alert("Заполните поле УНП!")
+            }
+        })
+
+        $("#btn-f").click(function () {
+            if(isFIO_NUM()) {
+                var text = $("#f-num").val(),
+                        tr = "<tr class='ui-widget-content ui-datatable-empty-message'>",
+                        table, code,
+                        name = $("#f-name").val(),
+                        fam = $("#f-fam").val(),
+                        otch = $("#f-otch").val();
+
+                var obj = {
+                    num: text,
+                    fam: fam,
+                    name: name,
+                    otch: otch
+                }
+                $("#resultTable_data_f").empty();
+
+                $.ajax({
+                    type: "POST",
+                    data: JSON.stringify(obj),
+                    url: "http://" + ip + ":" + port + "/root/SHSGetFromDataFL",
+                    async: false,
+                    contentType: 'application/json',
+                    success: function (res) {
+                        code = res.code;
+                        table = (res.result);
+                    },
+                    error: function (res) {
+                        alert(res);
+                    }
+                });
+                $("#resultTable_data_f").append(function () {
+                    if (code == 1) {
+                        for (var i = 0; i < table.length; i++) {
+                            tr += '<td>' + table[i].num + '</td>' +
+                                    '<td>' + table[i].name + '</td>' +
+                                    '<td>' + table[i].opi + '</td>' +
+                                    '<td>' + table[i].cnt + '</td>' +
+                                    '</tr>';
+                        }
+                        return tr;
+                    } else {
+                        tr += '<td colspan="2">' + table + '</td>' + '</tr>';
+                        return tr;
+                    }
+                })
+                isDisabled("table_jur", "table_fiz");
+            } else{
+            alert("Все поля обязательны для заполнения!")
+        }
+        })
+
+    })
+
+    function isDisabled(add, remove) {
+        if(!$("#"+add+"").hasClass('dis')){
+            $("#"+add+"").addClass('dis')
+        }
+        if($("#"+remove+"").hasClass('dis')){
+            $("#"+remove+"").removeClass('dis')
+        }
+    }
+
+    function closeTab(closeTab, closeGlyph, openGlyph) {
+        $("#"+closeTab+"").removeClass('ui-state-active');
+        $("#"+closeGlyph+"").removeClass('glyphicon-triangle-bottom')
+        $("#"+openGlyph+"").addClass('glyphicon-triangle-right')
+    }
+
+    function openTab(openTab, openGlyph, closeGlyph) {
+        $("#"+openTab+"").addClass('ui-state-active');
+        $("#"+openGlyph+"").addClass('glyphicon-triangle-bottom')
+        $("#"+closeGlyph+"").removeClass('glyphicon-triangle-right')
+    }
+
+    function controllerTab(isFiz) {
+        if($("#jur-h").hasClass('ui-state-active') && !$("#fiz-h").hasClass('ui-state-active')){
+            if(isFiz) {
+                openTab('fiz-h', 'fiz-sp', 'fiz-sp');
+                closeTab('jur-h', 'jur-sp', 'jur-sp');
+            }else {
+                closeTab('fiz-h', 'fiz-sp', 'fiz-sp');
+                closeTab('jur-h', 'jur-sp', 'jur-sp');
+            }
+        }else if(!$("#jur-h").hasClass('ui-state-active') && $("#fiz-h").hasClass('ui-state-active')){
+            if(isFiz) {
+                closeTab('fiz-h', 'fiz-sp', 'fiz-sp');
+                closeTab('jur-h', 'jur-sp', 'jur-sp');
+            }else {
+                openTab('jur-h', 'jur-sp', 'jur-sp');
+                closeTab('fiz-h', 'fiz-sp', 'fiz-sp');
+            }
+        }else if(!$("#jur-h").hasClass('ui-state-active') && !$("#fiz-h").hasClass('ui-state-active')){
+            if(isFiz) {
+                openTab('fiz-h', 'fiz-sp', 'fiz-sp');
+                closeTab('jur-h', 'jur-sp', 'jur-sp');
+            }else {
+                openTab('jur-h', 'jur-sp', 'jur-sp');
+                closeTab('fiz-h', 'fiz-sp', 'fiz-sp');
+            }
+        }
+    }
+
+    function isFIO_NUM(){
+        var flag=true;
+        if($("#f-name").val().length == 0){
+            flag = false;
+        }else if($("#f-fam").val().length == 0){
+            flag = false;
+        }else if($("#f-otch").val().length == 0){
+            flag = false;
+        }else if($("#f-num").val().length == 0){
+            flag = false;
+        }
+        return flag;
+    }
+	
+	function proverka(input) {
+    input.value = input.value.replace(/[^\d,]/g, '');
+}
+
+function proverka2(input) {
+    input.value = input.value.replace(/[^\d,]/g, '');
+}
+
+</script>
+
+</body>
+</html>
